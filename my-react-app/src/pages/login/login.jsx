@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link , useNavigate} from "react-router-dom";
 import axios from "axios";
 import "./css/login.scss";
 import logo from '../../../assets/logo.svg';
@@ -6,24 +7,29 @@ import affect from '../../../assets/test.svg';
 
 function login() {
     const [email, setEmail] = useState("");
+    const [islogin,setIsLogin]=useState(false);
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
+    const rep = "";
 
-    const test = (e) => {
-        setEmail(e.target.value);
-    };
+    const handleLogin = async(event)=>{
+        event.preventDefault();
+        try{
+            
+            await axios.post("http://127.0.0.1:8000/api/login",{email,password})
+            .then(response => {
+                // obtain the data return from controller 
+                const rep = response.data;
 
-    const sendData = () => {
-        axios
-            .post("https://jsonplaceholder.typicode.com/posts", {
-                email_x: email,
-            })
-            .then(function (response) {
-                //console.log(response);
-                console.log("send");
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    };
+                console.log(response);
+                  
+             });
+             
+        }catch(e){
+            console.log(e);
+
+        }
+    }
 
     return (
         <>
@@ -32,6 +38,7 @@ function login() {
                 <div className="p1">
                     <img src={affect} alt="hh" />
                     <div className="box">
+                        <span>{rep}</span>
                     <h1>Lorem ipsum dolor sit amet.</h1>
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio, nisi.</p>
                     </div>
@@ -44,13 +51,11 @@ function login() {
                         </div>
                         <h2>Lorem ipsum dolor sit.</h2>
                         <div className="form_div">
-                            <form>
+                            <form onSubmit={handleLogin}>
                                 <div className="div_form">
                                     <label>Email address</label>
                                     <input
-                                        onKeyDown={(e) => {
-                                            test(e);
-                                        }}
+                                       onChange={(e)=>setEmail(e.target.value)}
                                         type="email"
                                         className="form-control"
                                         id="exampleInputEmail1"
@@ -59,11 +64,9 @@ function login() {
                                     ></input>
                                 </div>
                                 <div className="div_form">
-                                    <label>Email address</label>
+                                    <label>Password</label>
                                     <input
-                                        onKeyDown={(e) => {
-                                            test(e);
-                                        }}
+                                       onChange={(e)=>setPassword(e.target.value)}
                                         type="password"
                                         className="form-control"
                                         id="exampleInputEmail1"
@@ -79,7 +82,7 @@ function login() {
                                 </div>
                                 
 
-                                <button>login</button>
+                                <button type="submit">login</button>
                             </form>
                         </div>
                     </div>
