@@ -1,29 +1,51 @@
 import React, { useState } from "react";
-import { Link , useNavigate} from "react-router-dom";
+import { Link , Navigate, useNavigate} from "react-router-dom";
+import { Alert } from "@mui/material";
 import axios from "axios";
 import "./css/login.scss";
 import logo from '../../../assets/logo.svg';
 import affect from '../../../assets/test.svg';
+import { useStateContext } from "../../contexts/ContextProvider";
 
-function login() {
+function Login() {
     const [email, setEmail] = useState("");
-    const [islogin,setIsLogin]=useState(false);
     const [password, setPassword] = useState("");
-    const navigate = useNavigate();
-    const rep = "";
+    const [emailErrors, setemailErrors] = useState("");
+    const [passwordErrors, setpasswordErrors] = useState("");
+    const [messageErrors, setmessageErrors] = useState("");
+    const {setUser, setToken} = useStateContext("");
+   
 
     const handleLogin = async(event)=>{
         event.preventDefault();
         try{
             
             await axios.post("http://127.0.0.1:8000/api/login",{email,password})
-            .then(response => {
-                // obtain the data return from controller 
-                const rep = response.data;
-
-                console.log(response);
+            .then(({data}) => {
+                setUser(data.user);
+                setToken(data.token);
+                console.log(data.token);
+                setemailErrors('');
+                setpasswordErrors('');
+                
                   
-             });
+             })
+             .catch(err =>{
+                const response = err.response;
+                if(response && response.status == 422){
+                    if(response.data.errors){
+                        setemailErrors(response.data.errors.email[0]);
+                    setpasswordErrors(response.data.errors.password[0]);
+                    }else{
+                        setmessageErrors( <Alert severity="error">{response.data.message}</Alert>
+                        );
+                        console.log(response)
+                    }
+                    
+                    
+                }
+
+             })
              
         }catch(e){
             console.log(e);
@@ -38,9 +60,10 @@ function login() {
                 <div className="p1">
                     <img src={affect} alt="hh" />
                     <div className="box">
-                        <span>{rep}</span>
+                       
                     <h1>Lorem ipsum dolor sit amet.</h1>
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio, nisi.</p>
+                    
                     </div>
 
                 </div>
@@ -51,6 +74,8 @@ function login() {
                         </div>
                         <h2>Lorem ipsum dolor sit.</h2>
                         <div className="form_div">
+                        {messageErrors}
+
                             <form onSubmit={handleLogin}>
                                 <div className="div_form">
                                     <label>Email address</label>
@@ -62,6 +87,8 @@ function login() {
                                         aria-describedby="emailHelp"
                                         placeholder="enter email"
                                     ></input>
+                                    {emailErrors}
+                                    
                                 </div>
                                 <div className="div_form">
                                     <label>Password</label>
@@ -73,6 +100,7 @@ function login() {
                                         aria-describedby="emailHelp"
                                         placeholder="password"
                                     ></input>
+                                    {passwordErrors}
                                 </div>
                                 <div className="checkbox_div">
                                    <div className="checkbox">
@@ -94,4 +122,4 @@ function login() {
     );
 }
 
-export default login;
+export default Login;
