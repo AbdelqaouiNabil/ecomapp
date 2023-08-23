@@ -1,0 +1,38 @@
+
+
+$black: var(--black);
+$main_color: var(--main_color);
+$main_color_2: var(--main_color_2);
+$white: var(--white);
+$white_2: var(--white_2);
+$gray: var(--gray);
+$gray_text: var(--gray_text);
+$radius: var(--radius);
+$shadow: var(--shadow);
+$main_color_bk: var(--main_color_bk);
+$white_fixed:#fff;
+
+:root {
+    --black: #1d1d1f;
+    --main_color: #525fe1;
+    --main_color_bk: rgba(82, 94, 225, 0.08);
+    --main_color_2: #6ad3ff;
+    --white: #fff;
+    --white_2: #e6e8f4;
+    --gray: #f4f7fe;
+    --gray_text: #6e6e73;
+    --radius: 18px;
+    --shadow: 2px 4px 12px rgba(0, 0, 0, 0.08);
+}
+.darkmode{
+
+    --black: #ffffff;
+    --main_color: #525fe1;
+    --main_color_2: #6ad3ff;
+    --white: #121212;
+    --white_2: #e6e8f4;
+    --gray: #1b1b1b;
+    --gray_text: #ffffff;
+    --radius: 18px;
+    --shadow: 2px 4px 12px rgba(0, 0, 0, 0.1);
+}

@@ -1,25 +1,35 @@
-import {  Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 
-import Login from "./Login";
+import Login from "./pages/login/login";
+import Dashboard from "./pages/dashboard/dashboard";
+import Commerce from "./pages/commerce/Commerce";
+import Nav from "./pages/nav/Nav";
+import NavTwo from "./pages/nav/NavTwo";
+import { useEffect, useState } from "react";
 function App() {
+    const [login, setLogin] = useState(false);
+    useEffect(() => {
+        if (localStorage.getItem("login")) {
+            setLogin(true);
+        }
+    }, []);
 
-  return (
-    <>
-      <div className='max-w-xl6 mx-auto'>
-       <h1> Hello </h1>
-       <h2> Back End Developer </h2>
-       <Link to="/">Home</Link>
-       <Link to="/login">Login</Link>
-       <Link to="/register">Register</Link>
-       <div>
-        <Routes>
-        <Route path="Login" element={<Login />} />
-        </Routes>
-       </div>
-      </div>
-     
-    </>
-  )
+    if (!login) {
+        return <Login></Login>;
+    }
+    return (
+        <>
+            <Nav />
+            <main className="dashboard">
+                <NavTwo />
+                <Routes>
+                    <Route path="/" element={<Dashboard />} />
+                    <Route path="commerce" element={<Commerce/>} />
+                    <Route path="home" element={<Dashboard />} />
+                </Routes>
+            </main>
+        </>
+    );
 }
 
-export default App
+export default App;

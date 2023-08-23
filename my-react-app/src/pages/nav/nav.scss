@@ -1,0 +1,110 @@
+@import '../css_inc/var.scss';
+nav{
+    background: $white;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0px;
+
+    .logo{
+        width: 100%;
+        height: 100px;
+        background: $white;
+        display: flex;
+        align-items: center;
+        padding-left: 20px;
+    }
+    .list_d{
+        //background: blueviolet;
+        padding: 0 20px;
+        ul{
+            //background: rgb(251, 0, 255);
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            li{
+                height: 50px;
+                //background: rgb(226, 43, 70);
+                //border-bottom: 1px solid #000;
+                list-style: none;
+
+                a{
+                    display: flex;
+                    align-items: center;
+                    height: 100%;
+                    padding-left: 20px;
+                    text-decoration: none;
+                    gap: 16px;
+                    color: $black;
+                    font-size: 18px;
+                    border-radius: 8px;
+
+                    transition: all .2s  ease;
+                    &:hover{
+                        background: $main_color;
+                        color: $white_fixed;
+                    }
+                    i{
+                        font-size: 20px;
+                    }
+                    &.active{
+                        background: $main_color;
+                        color: $white_fixed;
+                        i{
+                            font-size: 20px;
+                            color: $white_fixed;
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+    .footer{
+        width: 100%;
+        height: 60px;
+        background: rgba(47, 47, 47, 0);
+        margin-top: auto;
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        span{
+            width: 100%;
+            height: 18px;
+            display: flex;
+            gap: 10px;
+            font-size: 18px;
+            color: $black;
+            button{
+                height: 18px;
+                border: none;
+                border-radius: 9px;
+                width: 33px;
+                cursor: pointer;
+                position: relative;
+                background: $main_color;
+                transform: translateY(2px);
+                &::after{
+                    content: '';
+                    width: 14px;
+                    height: 14px;
+                    top: 2px;
+                    left: 2px;
+                    background: $white_fixed;
+                    border-radius: 50%;
+                    position: absolute;
+                    box-shadow: $shadow;
+                    transition: all 0.3s linear;
+                }
+                &.active_btn_dark_mode{
+
+                    &::after{
+                        left: 16px;
+                    }
+
+                }
+            }
+        }
+    }
+}
